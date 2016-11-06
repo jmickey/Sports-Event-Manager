@@ -1,0 +1,121 @@
+﻿@model SportsManager.ViewModels.EventIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+
+    <br /><br />Click <b>details</b> to see all event information.
+    <br />Click <b>select</b> to see event competitors.
+</p>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Game
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().featureEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().eventVenue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().eventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().eventStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().eventEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().eventDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.First().worldRecord)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game.gameName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.featureEvent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventVenue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.worldRecord)
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { id = item.eventID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.eventID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.eventID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@if (Url.RequestContext.RouteData.Values["id"] != null)
+{
+    <h3>Competitors for Selected Event</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "EventCompetitors", new { id = Url.RequestContext.RouteData.Values["id"] }, new { @class = "btn btn-primary" })
+    </p>
+    if (Model.EventCompetitors != null)
+    {
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.EventCompetitors.First().Competitor.competitorName)</th>
+                <th>@Html.DisplayNameFor(model => model.EventCompetitors.First().competitorPosition)</th>
+                <th>@Html.DisplayNameFor(model => model.EventCompetitors.First().competitorMedal)</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.EventCompetitors)
+            {
+                <tr>
+                    <td>
+                        @item.Competitor.competitorName
+                    </td>
+                    <td>
+                        @item.competitorPosition
+                    </td>
+                    <td>
+                        @item.competitorMedal
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "EventCompetitors", new { id = item.eventID, competitorID = item.competitorID }, null) |
+                        @Html.ActionLink("Delete", "Delete", "EventCompetitors", new { id = item.eventID, competitorID = item.competitorID }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    }
+}

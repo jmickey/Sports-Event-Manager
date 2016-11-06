@@ -1,0 +1,106 @@
+﻿@model SportsManager.Models.Event
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.gameID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Game.gameName)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.featureEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.featureEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventVenue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventVenue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventStartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventStartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventEndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventEndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.worldRecord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.worldRecord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photos)
+        </dt>
+
+        @if (Model.Photos != null)
+        {
+            <dd>
+                @foreach (var photo in Model.Photos)
+                {
+                    <div class="col-xs-6 col-md-3 thumbDiv">
+                        <a href="@photo.photoPath" class="thumbnail">
+                            <img src="@photo.photoPath" alt="Competitor Photo" />
+                        </a>
+                    </div>
+                }
+            </dd>
+        }
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

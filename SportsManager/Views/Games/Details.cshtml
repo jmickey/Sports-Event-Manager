@@ -1,0 +1,61 @@
+﻿@model SportsManager.Models.Game
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Game Management</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.gameName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gameName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gameCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gameCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gameDurationInMins)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gameDurationInMins)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gameDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gameDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gameBookletPath)
+        </dt>
+
+        <dd>
+            @if (Model.gameBookletPath != null)
+            {
+                <a href="@Html.ValueFor(model => model.gameBookletPath)" class="btn btn-success gameDl">Download</a>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.gameID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

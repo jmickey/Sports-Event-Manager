@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SportsManager.Models.Event>
+
+@{
+    ViewBag.Title = "Event Results";
+}
+
+<h2>Event Search Results</h2>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Game
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.featureEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eventVenue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eventStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eventEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.eventDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.worldRecord)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Game.gameName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.featureEvent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventVenue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventEndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.eventDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.worldRecord)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,172 @@
+﻿@model SportsManager.ViewModels.CompetitorViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section styles {
+    @Styles.Render("~/Content/css/intlTelInput.css")
+    @Styles.Render("~/Content/css/bootstrap-select.min.css")
+    @Styles.Render("~/Content/css/jqueryui")
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Competitors", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Competitor</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger", @style = "max-width: 70%" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorSalutation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Competitor.competitorSalutation, (ICollection<SelectListItem>)ViewBag.titlesList, "- Select Title -", htmlAttributes: new { @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorSalutation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Competitor.competitorName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorDoB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Competitor.competitorDoB, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorDoB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Competitor.competitorEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorDescription, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Competitor.competitorDescription, new { @class = "form-control", @rows = "5"})
+                @Html.ValidationMessageFor(model => model.Competitor.competitorDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorCountry, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Competitor.competitorCountry, (IEnumerable<SelectListItem>)ViewBag.countryList, "- Select Country -", htmlAttributes: new { @class = "form-control selectpicker", data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorGender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Competitor.competitorGender, (ICollection<SelectListItem>)ViewBag.genderList, "- Select Gender -", htmlAttributes: new { @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorGender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Competitor.competitorPhone, new { htmlAttributes = new { @class = "form-control phone" } })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorWebsite, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Competitor.competitorWebsite, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Competitor.competitorWebsite, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedGames, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.SelectedGames, Model.AllGames, new { @class = "form-control selectpicker show-tick", title = "Select one or more game" })
+                @Html.ValidationMessageFor(model => model.SelectedGames, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Competitor.competitorPhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse <input type="file" id="competitorPhoto" name="competitorPhoto" value="Upload Photo" style="display: none;">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/phone")
+    <script language="javascript">
+
+        jQuery(function () {
+            $(':file').on('fileselect', function (event, label) {
+                var input = $(this).parents('.input-group').find(':text')
+
+                if (input.length) {
+                    input.val(label);
+                }
+            });
+
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    label = input.val().replace(/\//g, '\\').replace(/.*[\\]/, '');
+                input.trigger('fileselect', label);
+            });
+
+            $(".phone").intlTelInput({
+                preferredCountries: ["au", "us", "gb"],
+                utilsScript: "/Scripts/utils.js"
+            });
+
+            // Source: https://goo.gl/Bs9soe
+            // Use jQuery Datepicker as a fallback for lack of browser support for the date input field
+            if (!Modernizr.inputtypes.date) {
+                $('input[type=date]').datepicker({
+                    // This is chrome's required format for the datepicker, so I am using it to stay consistent
+                    dateFormat: 'yy-mm-dd'
+                });
+            }
+
+            $("form").submit(function () {
+                $("#Competitor_competitorPhone").val($("#Competitor_competitorPhone").intlTelInput("getNumber"));
+            });
+        });
+
+    </script>
+    @Scripts.Render("~/Scripts/bootstrap-select.min.js")
+}

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SportsManager.Models.Game>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+
+    <br /><br />Click <b>details</b> to see all game information.
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.gameName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gameCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gameDurationInMins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gameDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gameBookletPath)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.gameName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gameCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gameDurationInMins)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gameDescription)
+        </td>
+        <td>
+            @if (item.gameBookletPath != null)
+            {
+                <a href="@Html.ValueFor(modelItem => item.gameBookletPath)" class="btn btn-success">Download</a>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.gameID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.gameID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.gameID })
+        </td>
+    </tr>
+}
+
+</table>

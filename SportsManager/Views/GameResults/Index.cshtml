@@ -1,0 +1,86 @@
+﻿@model SportsManager.ViewModels.GameResultViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Medal Tally</h2>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Position
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Gold
+            </th>
+            <th>
+                Silver
+            </th>
+            <th>
+                Bronze
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+        @{ int position = 1; }
+        @{ int lastMedals = 0;}
+        @foreach (var item in Model.GameResultMedals)
+        {
+            <tr>
+                <td>
+                    @if (item.Total == lastMedals) { position--; }
+                    @position
+                </td>
+                <td>
+                    @item.Country
+                </td>
+                <td>
+                    @item.Gold
+                </td>
+                <td>
+                    @item.Silver
+                </td>
+                <td>
+                    @item.Bronze
+                </td>
+                <td>
+                    @item.Total
+                </td>
+                @{ lastMedals = @item.Total; }
+                @{ position++; }
+            </tr>
+        }
+
+    </table>
+    </div>
+    <h2>World Records</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    Athlete Name
+                </th>
+                <th>
+                    Game
+                </th>
+            @foreach (var item in Model.GameResultRecords)
+            {
+                <tr>
+                    <td>
+                        @item.CompetitorName
+                    </td>
+                    <td>
+                        @item.Game
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>

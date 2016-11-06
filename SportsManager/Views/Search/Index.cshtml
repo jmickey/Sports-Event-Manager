@@ -1,0 +1,62 @@
+﻿@model SportsManager.ViewModels.SearchViewModel
+
+@{
+    ViewBag.Title = "Search Home";
+}
+
+<h2>Search</h2>
+
+<div>
+    <h3>Event Photos</h3>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.selectedTag, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.selectedTag, Model.AllTags, " Select Tag ", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.selectedTag, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.SearchResults != null)
+    {
+        <div class="col-md-12">
+            @foreach (var item in Model.SearchResults) {
+                <div class="col-xs-6 col-md-3">
+                    <a href="@item.photoPath" class="thumbnail">
+                        <img src="@item.photoPath" alt="Competitor Photo" />
+                    </a>
+                    <br />
+                </div>
+            }
+        </div>
+    }
+
+    <h3 style="clear:both;">Event Search</h3>
+    @using (Html.BeginForm("GetEvents", "Search", FormMethod.Post))
+    {
+        <div class="">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="SearchString">Event Search</label>
+                    <div class="col-md-8">
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

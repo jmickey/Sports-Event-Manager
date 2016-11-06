@@ -1,0 +1,115 @@
+﻿@model SportsManager.Models.Competitor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Competitor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorSalutation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorSalutation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorDoB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorDoB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorCountry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorCountry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorGender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorGender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.competitorWebsite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.competitorWebsite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Games)
+        </dt>
+
+        <dd>
+            @{
+                @String.Join(", ", Model.Games.Select(p => p.gameName).ToArray())
+            }
+        </dd>
+
+        @if (Model.competitorPhotoPath != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.competitorPhotoPath)
+            </dt>
+
+            <dd>
+                <div class="col-xs-6 col-md-3 thumbDiv">
+                    <a href="@Model.competitorPhotoPath" class="thumbnail">
+                        <img src="@Model.competitorPhotoPath" alt="Competitor Photo" />
+                    </a>
+                </div>
+            </dd>
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.competitorID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

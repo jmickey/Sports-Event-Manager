@@ -1,0 +1,106 @@
+﻿@model SportsManager.Models.Game
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Games", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Game Management</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger", @style = "max-width: 70%" })
+        @Html.HiddenFor(model => model.gameID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gameName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gameName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gameName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gameCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gameCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gameCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gameDurationInMins, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gameDurationInMins, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gameDurationInMins, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gameDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gameDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gameDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.gameBookletPath)
+        <div class="form-group">
+            @Html.LabelFor(model => model.gameBookletPath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @if (Model.gameBookletPath != null)
+                {
+                    <a href="@Model.gameBookletPath" class="btn btn-success">Download</a>
+                    <br />
+                    <p style="margin-top: 10px;">Replace File:</p>
+                }
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse <input type="file" id="gameBookletPath" name="gameBookletPath" value="Upload File" style="display: none;">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script language="javascript">
+        jQuery(function () {
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    label = input.val().replace(/\//g, '\\').replace(/.*[\\]/, '');
+                input.trigger('fileselect', label);
+            });
+
+            $(':file').on('fileselect', function (event, label) {
+
+                var input = $(this).parents('.input-group').find(':text')
+
+                if (input.length) {
+                    input.val(label);
+                }
+
+            });
+        });
+    </script>
+}

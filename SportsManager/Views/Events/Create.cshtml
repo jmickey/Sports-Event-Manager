@@ -1,0 +1,251 @@
+﻿@model SportsManager.ViewModels.EventViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+@section styles {
+    @Styles.Render("~/Content/css/bootstrap-select.min.css")
+    @Styles.Render("~/Content/css/jqueryui")
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Events", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Event</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger", @style = "max-width: 70%" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.gameID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id="gameInput">
+                @Html.DropDownListFor(model => model.Event.gameID, (SelectList)Model.Games, "- Select Game -", htmlAttributes: new { @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(model => model.Event.gameID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.featureEvent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Event.featureEvent)
+                    @Html.ValidationMessageFor(model => model.Event.featureEvent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.eventVenue, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event.eventVenue, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Event.eventVenue, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.eventDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event.eventDate, new { htmlAttributes = new { @class = "form-control unstyled" } })
+                @Html.ValidationMessageFor(model => model.Event.eventDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.eventStartTime, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event.eventStartTime, new { htmlAttributes = new { @class = "form-control", placeholder = "HH:MM" } })
+                @Html.ValidationMessageFor(model => model.Event.eventStartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.eventEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event.eventEndTime, new { htmlAttributes = new { @class = "form-control", placeholder = "HH:MM" } })
+                @Html.ValidationMessageFor(model => model.Event.eventEndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.eventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Event.eventDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Event.eventDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.worldRecord, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Event.worldRecord)
+                    @Html.ValidationMessageFor(model => model.Event.worldRecord, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Event.Photos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="fileUploadFirst fileUploadDiv">
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary">
+                                Browse <input type="file" name="eventPhotos" value="Upload Photo" style="display: none;">
+                            </span>
+                        </label>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                    @Html.TextBoxFor(model => model.PhotoTags, htmlAttributes: new { @class = "form-control photoTagsInput", placeholder = "Enter photo tags - Separate with comma." })
+                    @Html.ValidationMessageFor(model => model.PhotoTags, "", new { @class = "text-danger" })
+                </div>
+                <button class="btn btn-info" type="button" id="addFile">Add another...</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/bootstrap-select.min.js")
+    <script language="javascript">
+        jQuery(function () {
+            // Source: http://stackoverflow.com/a/1423568
+            function setEndTime() {
+                // True if game has been selected from the dropdown list
+                var gameSelected = (!$('button[data-id=Event_gameID').hasClass('bs-placeholder'));
+                // Only update the end time if both the game and start time are have been input
+                if (gameSelected && $('#Event_eventStartTime').val()) {
+                    // Grabs the string for the selected game
+                    var game = $('button[data-id=Event_gameID]').children('span.filter-option').html();
+
+                    // Post the game name to the JsonResult route - returns game duration
+                    $.ajax({
+                        url: "/Events/GetGameDuration",
+                        type: "POST",
+                        dataType: "json",
+                        data: { gameName: game },
+                        success: function (data) {
+                            UpdateEndTime(data);
+                        }
+                    });
+
+                    function UpdateEndTime(duration) {
+                        // Check if browser will support this
+                        if (Modernizr.inputtypes.time) {
+                            // Get the datetime value from the start time element
+                            var time = document.getElementById('Event_eventStartTime').valueAsDate;
+                            time.setMinutes(time.getMinutes() + duration[0]);
+                            /* Reassign time to a new date object;
+                            getTime() returns the number of milliseconds since Jan 1 1970 */
+                            time = new Date(time.getTime());
+                            document.getElementById('Event_eventEndTime').valueAsDate = time;
+                        }
+                    }
+                }
+            }
+
+            // Event listers for game dropdown and start time; blur is triggered when focus is removed
+            $('#gameInput').on('click', 'ul.dropdown-menu li a', function () {
+                setEndTime();
+            });
+            $('#Event_eventStartTime').on('blur', function () {
+                setEndTime();
+            });
+
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    label = input.val().replace(/\//g, '\\').replace(/.*[\\]/, '');
+                input.trigger('fileselect', label);
+            });
+
+            $(document).on('fileselect', ':file',function (event, label) {
+                var input = $(this).parents('.input-group').find(':text')
+
+                if (input.length) {
+                    input.val(label);
+                }
+            });
+
+            // Source: https://goo.gl/r5MCvb (c-sharpcorner.com)
+            // Sends a request to a JsonResult route to get possible tags
+            $("#PhotoTags").autocomplete({
+                source: function (req, resp) {
+                    $.ajax({
+                        url: "/Events/SearchTags",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: GetLastInput(req.term) },
+                        success: function (data) {
+                            resp($.map(data, function (item) {
+                                return { label: item.tagString, value: item.tagString };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    var LastValue = (this.value).split(/[.,;]\s*/);
+                    LastValue.pop();
+                    LastValue.push(ui.item.value);
+                    LastValue.push("");
+                    this.value = LastValue.join(", ");
+                    return false;
+                },
+                focus: function () {
+                    return false;
+                }
+            });
+
+            function GetLastInput(input) {
+                /* We tell the user to separate tags with commas, but we'll assume
+                they'll do the wrong thing anyway */
+                return input.split(/[.,;]\s*/).pop();
+            }
+
+            // Adds additional photo upload inputs when the add button is clicked
+            $('#addFile').click(function () {
+                var fileUploadFirst = $('.fileUploadFirst').clone(false, false);
+                $(fileUploadFirst).removeClass('fileUploadFirst').find('input[type="text"]').val('');
+                $('#addFile').before(fileUploadFirst);
+            });
+
+            // Source: https://goo.gl/Bs9soe
+            // Use jQuery Datepicker as a fallback for lack of browser support for the date input field
+            if (!Modernizr.inputtypes.date) {
+                $('input[type=date]').datepicker({
+                    // This is chrome's required format for the datepicker, so I am using it to stay consistent
+                    dateFormat: 'yy-mm-dd'
+                });
+            }
+
+            // Check for browser support for time picker and load one if not supported
+            if (!Modernizr.inputtypes.time) {
+                $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    href: '/Content/css/jquery.timepicker.css'
+                }).appendTo('head');
+                jQuery.getScript('/Scripts/jquery.timepicker.js')
+                    .done(function () {
+                        $('input[type=time]').addClass('ui-timepicker-input').timepicker({
+                            'timeFormat': 'H:i'
+                        });
+                    });
+            }
+        });
+    </script>
+}
